@@ -2,13 +2,12 @@ const express = require("express");
 const User = require('../models/userSchema')
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const saltRounds = 0;
+const saltRounds = 10;
 // post request for register the user
 router.post("/", async (req, res) => {
     try{
         bcrypt.hash(req.body.password, saltRounds).then(function(hash) {
             req.body.password= hash
-            req.body.token= ''
         }).then((data)=>{
             const appUser= User.create(req.body) 
                 res.json({
@@ -27,9 +26,7 @@ router.post("/", async (req, res) => {
 
 // view users
 router.get("/", async (req, res) => {
-res.json({
-    name:'hello'
-})
+
 });
 
 
